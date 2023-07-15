@@ -71,7 +71,7 @@ def checkwindiag2():
     return False
 
 def checkifeligible(A):
-    if len(A)!=2 or int(A[1])>6:
+    if len(A)!=2 or int(A[1])>6 or ord(A[0])>71 or ord(A[0])<65:
         Col = 0
         Row = 0
         return 0, Row, Col
