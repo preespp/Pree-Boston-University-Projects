@@ -1,4 +1,5 @@
 # MyProject
-Connectfour_Console_Pree_S.py is the file for my project in ENGEK130 course at Boston University, 
-  Introduction to Programming and Data Science with Python for Engineers.
-  This project is about connectfour game played on console/Terminal without any GUI.
+
+This repository contains the code file for my project in class, improved version of my project and other sided project.
+
+- Boston University EK130 project: 2 versions of Connect Four game 
