@@ -9,3 +9,7 @@ are two versions submitted in class: console version and GUI version with differ
   Introduction to Programming and Data Science with Python for Engineers. 
   This project is about connectfour game played on console/Terminal without any GUI, mainly aiming to
   create its algorithm.
+
+- Connectfour_GUI_Pree_S.py is the file for my project in ENGEK130 course at Boston University, 
+  Introduction to Programming and Data Science with Python for Engineers. 
+  This project is about connectfour game with GUI using pygame library to create the separate window for playing game exclusively.
