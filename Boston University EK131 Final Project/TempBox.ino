@@ -1,14 +1,20 @@
 // C++ code
 //
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-#define NOTE_B3  247
-#define NOTE_C4  262
-#define NOTE_D4  294
-#define NOTE_E4  330
-#define NOTE_G4  392
-#define REST      0
 
+#include <LiquidCrystal_I2C.h>
+
+#define NOTE_B3  247
+
+#define NOTE_C4  262
+
+#define NOTE_D4  294
+
+#define NOTE_E4  330
+
+#define NOTE_G4  392
+
+#define REST      0
 
 // change this to make the song slower or faster
 int tempo = 124;
@@ -21,11 +27,11 @@ int melody[] = {
   
   // Seven Nation Army by The White Stripes
   
-  NOTE_E4,16/3,REST,16/3,NOTE_E4,8,NOTE_G4,16/3,
-  NOTE_E4,16/3,NOTE_D4,8,NOTE_C4,2,NOTE_B3,2,
-  NOTE_E4,16/3,REST,16/3,NOTE_E4,8,NOTE_G4,16/3,
-  NOTE_E4,16/3,NOTE_D4,8,NOTE_C4,16/3,NOTE_D4,16/3,
-  NOTE_C4,8,NOTE_B3,2
+  NOTE_E4,16/3, REST,16/3, NOTE_E4,8,    NOTE_G4,16/3,
+  NOTE_E4,16/3, NOTE_D4,8, NOTE_C4,2,    NOTE_B3,2,
+  NOTE_E4,16/3, REST,16/3, NOTE_E4,8,    NOTE_G4,16/3,
+  NOTE_E4,16/3, NOTE_D4,8, NOTE_C4,16/3, NOTE_D4,16/3,
+  NOTE_C4,8,    NOTE_B3,2
   
 };
 
@@ -39,10 +45,14 @@ int wholenote = (60000 * 4) / tempo;
 int divider = 0, noteDuration = 0;
 
 LiquidCrystal_I2C lcd(0x20,16,2);  // set the LCD address to 0x20 for a 16 chars and 2 line display
-int sensorPin = A0;
+
+const int sensorPin = A0;
+
 int temperatureF;
-int LED = 3;
-int buzzer = 5;
+
+const int LED = 3;
+
+const int buzzer = 5;
 
 void setup()
 {
@@ -50,12 +60,17 @@ void setup()
 
     // calculates the duration of each note
     divider = melody[thisNote + 1];
+    
     if (divider > 0) {
+      
       // regular note, just proceed
       noteDuration = (wholenote) / divider;
+      
     } else if (divider < 0) {
+      
       // dotted notes are represented with negative durations!!
       noteDuration = (wholenote) / abs(divider);
+      
       noteDuration *= 1.5; // increases the duration in half for dotted notes
     }
 
@@ -66,9 +81,13 @@ void setup()
     delay(noteDuration);
     
     // stop the waveform generation before the next note.
-    noTone(buzzer);}
+    noTone(buzzer);
+  }
+  
   lcd.init(); 
+  
   pinMode(LED, OUTPUT);
+  
   Serial.begin(9600);
 }
 
@@ -77,13 +96,17 @@ void loop()
   int reading = analogRead(sensorPin);  
   
   float voltage = reading * 5.0;
+  
   voltage /= 1024.0; 
+  
   Serial.print(voltage); Serial.println(" volts");
   
   float temperatureC = (voltage - 0.5) * 100 ;
+  
   Serial.print(temperatureC); Serial.println(" degrees C");
   
   float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  
   Serial.print(temperatureF); Serial.println(" degrees F");
   
   // Print a message to the LCD.
@@ -95,25 +118,32 @@ void loop()
   lcd.print(" F");
   delay(1000);
   
-  if (temperatureF < 70 || temperatureF > 75)
-  {
+  if (temperatureF < 70 || temperatureF > 75){
+    
    lcd.setCursor(8,1);
    lcd.print("Warning!");
+    
    digitalWrite(LED, HIGH);
+    
    tone(buzzer, 1000); // Send 1KHz sound signal...
+    
    delay(1000); // ...for 1 sec
+    
    noTone(buzzer); // Stop sound...
+    
    delay(1000); // ...for 1 sec
+    
    digitalWrite(LED, LOW);
    }
-  else
-   {
+  else{
+    
    lcd.setCursor(8,1);
    lcd.print("        ");
+    
    digitalWrite(LED, LOW);
+    
    digitalWrite(buzzer, LOW);
     
    delay(1000);
-  
    }
 }
